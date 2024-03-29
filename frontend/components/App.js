@@ -34,29 +34,7 @@ export default function App() {
     navigate('/')
   }
   
-  const getArticles = () => {
-    // ✨ implement
-    // We should flush the message state, turn on the spinner
-    // and launch an authenticated request to the proper endpoint.
-    // On success, we should set the articles in their proper state and
-    // put the server success message in its proper state.
-    // If something goes wrong, check the status of the response:
-    // if it's a 401 the token might have gone bad, and we should redirect to login.
-    // Don't forget to turn off the spinner!
-    setMessage("");
-    setSpinnerOn(true);
-    axiosWithAuth
-    .get(`http://localhost:9000/api/articles`)
-       .then(response => {
-         setArticles(response.article);
-         setMessage(response.message)
-       })
-       .catch(err => {
-         if (err == 401){
-          return <navigate to="/" />
-         }
-            });  
-  }
+  
 
   const postArticle = article => {
     // ✨ implement

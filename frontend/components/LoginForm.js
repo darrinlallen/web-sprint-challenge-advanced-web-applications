@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PT from 'prop-types'
-
+import { Navigate, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 const initialFormValues = {
   username: '',
   password: '',
@@ -8,7 +9,7 @@ const initialFormValues = {
 export default function LoginForm(props) {
   const [values, setValues] = useState(initialFormValues)
   // ✨ where are my props? Destructure them here
-
+  const navigate = useNavigate();
   const onChange = evt => {
     const { id, value } = evt.target
     setValues({ ...values, [id]: value })
@@ -17,7 +18,13 @@ export default function LoginForm(props) {
   const onSubmit = evt => {
     evt.preventDefault()
     // ✨ implement
-  }
+    console.log("articles")
+    const token = localStorage.getItem('token');
+
+    login(values)
+    console.log("done", values)
+    console.log(token);
+    }
 
   const isDisabled = () => {
     // ✨ implement
@@ -29,7 +36,25 @@ export default function LoginForm(props) {
     } else
     { return true}
   }
+  const login = ({ username, password }) => {
+    // ✨ implement
+    // We should flush the message state, turn on the spinner
+    // and launch a request to the proper endpoint.
+    // On success, we should set the token to local storage in a 'token' key,
+    // put the server success message in its proper state, and redirect
+    // to the Articles screen. Don't forget to turn off the spinner!
+//    setMessage("");
+//    setSpinnerOn(true);
+    axios.post('http://localhost:9000/api/login', values)
+    .then(res => {
+      localStorage.setItem('token', res.token);
+//      setMessage(`Here are your articles, ${username}!`)
+//      setSpinnerOn(false);
+console.log(res.token)
+      return <navigate to="/articles" />
 
+    })
+  }
   return (
     <form id="loginForm" onSubmit={onSubmit}>
       <h2>Login</h2>

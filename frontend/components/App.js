@@ -6,6 +6,7 @@ import Message from './Message'
 import ArticleForm from './ArticleForm'
 import Spinner from './Spinner'
 
+
 const articlesUrl = 'http://localhost:9000/api/articles'
 const loginUrl = 'http://localhost:9000/api/login'
 
@@ -21,23 +22,18 @@ export default function App() {
   const redirectToLogin = () => { /* ✨ implement */ }
   const redirectToArticles = () => { /* ✨ implement */ }
 
-  const logout = () => {
+  const logout = (props) => {
     // ✨ implement
     // If a token is in local storage it should be removed,
     // and a message saying "Goodbye!" should be set in its proper state.
     // In any case, we should redirect the browser back to the login screen,
     // using the helper above.
+    localStorage.clear()
+    setMessage(`Goodbye!`)
+    console.log("goodbye")
+    navigate('/')
   }
-
-  const login = ({ username, password }) => {
-    // ✨ implement
-    // We should flush the message state, turn on the spinner
-    // and launch a request to the proper endpoint.
-    // On success, we should set the token to local storage in a 'token' key,
-    // put the server success message in its proper state, and redirect
-    // to the Articles screen. Don't forget to turn off the spinner!
-  }
-
+  
   const getArticles = () => {
     // ✨ implement
     // We should flush the message state, turn on the spinner
@@ -47,6 +43,19 @@ export default function App() {
     // If something goes wrong, check the status of the response:
     // if it's a 401 the token might have gone bad, and we should redirect to login.
     // Don't forget to turn off the spinner!
+    setMessage("");
+    setSpinnerOn(true);
+    axiosWithAuth
+    .get(`http://localhost:9000/api/articles`)
+       .then(response => {
+         setArticles(response.article);
+         setMessage(response.message)
+       })
+       .catch(err => {
+         if (err == 401){
+          return <navigate to="/" />
+         }
+            });  
   }
 
   const postArticle = article => {
@@ -68,7 +77,7 @@ export default function App() {
   return (
     // ✨ fix the JSX: `Spinner`, `Message`, `LoginForm`, `ArticleForm` and `Articles` expect props ❗
     <>
-      <Spinner />
+      <Spinner/>
       <Message />
       <button id="logout" onClick={logout}>Logout from app</button>
       <div id="wrapper" style={{ opacity: spinnerOn ? "0.25" : "1" }}> {/* <-- do not change this line */}
@@ -81,7 +90,7 @@ export default function App() {
           <Route path="/" element={<LoginForm />} />
           <Route path="articles" element={
             <>
-              <ArticleForm />
+              <ArticleForm/>
               <Articles />
             </>
           } />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink, Routes, Route, useNavigate } from 'react-router-dom'
 import Articles from './Articles'
 import LoginForm from './LoginForm'
@@ -34,7 +34,7 @@ export default function App() {
     navigate('/')
   }
   
-  const login = ( {username, password} ) => {
+  const login = ( username, password ) => {
     // ✨ implement
     // We should flush the message state, turn on the spinner
     // and launch a request to the proper endpoint.
@@ -53,6 +53,10 @@ console.log(res.token)
 
     })
   }
+const getArticles = () =>{
+
+
+}
   const postArticle = article => {
     // ✨ implement
     // The flow is very similar to the `getArticles` function.
@@ -72,8 +76,8 @@ console.log(res.token)
   return (
     // ✨ fix the JSX: `Spinner`, `Message`, `LoginForm`, `ArticleForm` and `Articles` expect props ❗
     <>
-      <Spinner/>
-      <Message />
+      <Spinner on={spinnerOn}/>
+      <Message message={message}/>
       <button id="logout" onClick={logout}>Logout from app</button>
       <div id="wrapper" style={{ opacity: spinnerOn ? "0.25" : "1" }}> {/* <-- do not change this line */}
         <h1>Advanced Web Applications</h1>
@@ -85,8 +89,11 @@ console.log(res.token)
           <Route path="/" element={<LoginForm login={login}/>} />
           <Route path="articles" element={
             <>
-              <ArticleForm/>
-              <Articles />
+              <ArticleForm  postArticle = {postArticle} updateArticle = {updateArticle}
+  setCurrentArticleId ={setCurrentArticleId} />
+              
+              <Articles articles={articles} getArticles= {getArticles} deleteArticle={deleteArticle}
+              setCurrentArticleId={setCurrentArticleId}/>
             </>
           } />
         </Routes>

@@ -24,8 +24,9 @@ export default function LoginForm({login}) {
   const onSubmit = evt => {
     evt.preventDefault()
     // ✨ implement
-    console.log("articles")
-    login({values})
+    console.log(values)
+
+    login(values)
       }
 
   const isDisabled = () => {

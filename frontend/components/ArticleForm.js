@@ -5,6 +5,7 @@ const initialFormValues = { title: '', text: '', topic: '' }
 
 export default function ArticleForm(props) {
   const [values, setValues] = useState(initialFormValues)
+   const [isArticle, setIsArticle] = useState("Create")
   // ✨ where are my props? Destructure them here
 
   useEffect(() => {
@@ -29,13 +30,19 @@ export default function ArticleForm(props) {
   const isDisabled = () => {
     // ✨ implement
     // Make sure the inputs have some values
+    if (values.text.trim().length >=1 && values.title.trim().length >=1 && (values.topic 
+      == "JavaScript" || values.topic== "React" || values.topic == "Node")){
+
+      return false
+    }
+    else { return true}
   }
 
   return (
     // ✨ fix the JSX: make the heading display either "Edit" or "Create"
     // and replace Function.prototype with the correct function
     <form id="form" onSubmit={onSubmit}>
-      <h2>Create Article</h2>
+      <h2>{isArticle}</h2>
       <input
         maxLength={50}
         onChange={onChange}

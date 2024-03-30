@@ -5,7 +5,7 @@ import LoginForm from './LoginForm'
 import Message from './Message'
 import ArticleForm from './ArticleForm'
 import Spinner from './Spinner'
-
+import axios from 'axios'
 
 const articlesUrl = 'http://localhost:9000/api/articles'
 const loginUrl = 'http://localhost:9000/api/login'
@@ -34,8 +34,25 @@ export default function App() {
     navigate('/')
   }
   
-  
+  const login = ( {username, password} ) => {
+    // ✨ implement
+    // We should flush the message state, turn on the spinner
+    // and launch a request to the proper endpoint.
+    // On success, we should set the token to local storage in a 'token' key,
+    // put the server success message in its proper state, and redirect
+    // to the Articles screen. Don't forget to turn off the spinner!
+    setMessage("");
+    setSpinnerOn(true);
+    axios.post('http://localhost:9000/api/login', username, password)
+    .then(res => {
+      localStorage.setItem('token', res.data.token);
+      setMessage(`Here are your articles, ${username}!`)
+      setSpinnerOn(false);
+console.log(res.token)
+     navigate ("/articles")
 
+    })
+  }
   const postArticle = article => {
     // ✨ implement
     // The flow is very similar to the `getArticles` function.
@@ -65,7 +82,7 @@ export default function App() {
           <NavLink id="articlesScreen" to="/articles">Articles</NavLink>
         </nav>
         <Routes>
-          <Route path="/" element={<LoginForm />} />
+          <Route path="/" element={<LoginForm login={login}/>} />
           <Route path="articles" element={
             <>
               <ArticleForm/>

@@ -9,23 +9,21 @@ export default function Articles(props) {
   // ✨ implement conditional logic: if no token exists
   // we should render a Navigate to login screen (React Router v.6)
   const token = localStorage.getItem('token');
-  const [message, setMessage] = useState('')
   const [articles, setArticles] = useState([])
   const [currentArticleId, setCurrentArticleId] = useState(0)
-  const [spinnerOn, setSpinnerOn] = useState(false)
-
   
     if (!token){
       return <Navigate to="/" />
     }
   
   useEffect(() => {
-   axiosWithAuth().
+   
+    axiosWithAuth().
     get(`http://localhost:9000/api/articles`)
     .then(response => {
       setArticles(response.data.articles);
-      setMessage(response.data.message)
-    })
+      
+    })          
   })
     
   return (
@@ -34,9 +32,7 @@ export default function Articles(props) {
     <div className="articles">
       <h2>Articles</h2>
       {
-        !articles.length
-          ? 'No articles yet'
-          : articles.map(art => {
+         articles.map(art => {
             return (
               <div className="article" key={art.article_id}>
                 <div>

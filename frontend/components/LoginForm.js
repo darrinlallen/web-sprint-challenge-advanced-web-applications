@@ -7,7 +7,7 @@ const initialFormValues = {
   username: '',
   password: '',
 }
-export default function LoginForm(props) {
+export default function LoginForm({login}) {
   const [message, setMessage] = useState('')
   const [articles, setArticles] = useState([])
   const [currentArticleId, setCurrentArticleId] = useState()
@@ -25,8 +25,7 @@ export default function LoginForm(props) {
     evt.preventDefault()
     // ✨ implement
     console.log("articles")
-
-    login(values)
+    login({values})
       }
 
   const isDisabled = () => {
@@ -39,25 +38,8 @@ export default function LoginForm(props) {
     } else
     { return true}
   }
-  const login = ({ username, password }) => {
-    // ✨ implement
-    // We should flush the message state, turn on the spinner
-    // and launch a request to the proper endpoint.
-    // On success, we should set the token to local storage in a 'token' key,
-    // put the server success message in its proper state, and redirect
-    // to the Articles screen. Don't forget to turn off the spinner!
-    setMessage("");
-    setSpinnerOn(true);
-    axios.post('http://localhost:9000/api/login', values)
-    .then(res => {
-      localStorage.setItem('token', res.data.token);
-      setMessage(`Here are your articles, ${username}!`)
-      setSpinnerOn(false);
-console.log(res.token)
-      navigate ("/articles")
-
-    })
-  }
+  
+  
   return (
     <form id="loginForm" onSubmit={onSubmit}>
       <h2>Login</h2>

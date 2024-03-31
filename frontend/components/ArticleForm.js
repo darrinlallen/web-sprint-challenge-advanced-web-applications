@@ -3,7 +3,10 @@ import PT from 'prop-types'
 
 const initialFormValues = { title: '', text: '', topic: '' }
 
-export default function ArticleForm(props) {
+export default function ArticleForm( {postArticle},
+  updateArticle,
+  setCurrentArticleId,
+  currentArtice){
   const [values, setValues] = useState(initialFormValues)
    const [isArticle, setIsArticle] = useState("Create")
   // ✨ where are my props? Destructure them here
@@ -25,6 +28,8 @@ export default function ArticleForm(props) {
     // ✨ implement
     // We must submit a new post or update an existing one,
     // depending on the truthyness of the `currentArticle` prop.
+    console.log(values)
+       postArticle(values)
   }
 
   const isDisabled = () => {

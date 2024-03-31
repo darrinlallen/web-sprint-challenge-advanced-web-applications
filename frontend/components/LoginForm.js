@@ -21,12 +21,13 @@ export default function LoginForm({login}) {
     setValues({ ...values, [id]: value })
   }
 
-  const onSubmit = evt => {
+  const onSubmit = (evt) => {
     evt.preventDefault()
     // ✨ implement
     console.log(values)
 
-    login(values)
+     login(values)
+
       }
 
   const isDisabled = () => {

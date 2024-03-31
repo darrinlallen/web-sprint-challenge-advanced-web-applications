@@ -3,29 +3,41 @@ import axiosWithAuth from '../axios/index'
 import { Navigate } from 'react-router-dom'
 import PT from 'prop-types'
 
-export default function Articles(articles2, getByText, deleteArticle, 
-  setCurrentArticleId, currentArticleId ) {
+export default function Articles({articles2, getArticles, deleteArticle, 
+  setCurrentArticleId, currentArticleId} ) {
   // ✨ where are my props? Destructure them here
 
   // ✨ implement conditional logic: if no token exists
   // we should render a Navigate to login screen (React Router v.6)
-  const token = localStorage.getItem('token');
-  const [articles, setArticles] = useState([])
+    const [articles, setArticles] = useState([])
   
-    if (!token){
-      return <Navigate to="/" />
+
+
+      const token = localStorage.getItem('token');
+
+      if (!token){
+   return <Navigate to="/" />
     }
-  
-  useEffect(() => {
-   
-    axiosWithAuth().
+    
+      useEffect(() => {
+    const arts = async () =>{
+      try{ 
+    
+    const response = await axiosWithAuth().
     get(`http://localhost:9000/api/articles`)
     .then(response => {
-      setArticles(response.data.articles);
-      
-    })          
+      setArticles(response.data.articles)});
+      } 
+      catch(err){
+       console.log("llllllllllllllllllllll")
+      }
+  }
+  arts()    
   })
     
+const deleteMe = (ids) =>{
+ deleteArticle()
+}
   return (
     // ✨ fix the JSX: replace `Function.prototype` with actual functions
     // and use the articles prop to generate articles
@@ -41,8 +53,8 @@ export default function Articles(articles2, getByText, deleteArticle,
                   <p>Topic: {art.topic}</p>
                 </div>
                 <div>
-                  <button disabled={true} onClick={Function.prototype}>Edit</button>
-                  <button disabled={true} onClick={Function.prototype}>Delete</button>
+                  <button disabled={false} onClick={Function.prototype}>Edit</button>
+                  <button disabled={false} onClick={() => deleteArticle(art.article_id)}>Delete</button>
                 </div>
               </div>
             )

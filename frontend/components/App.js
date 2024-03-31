@@ -23,7 +23,7 @@ export default function App() {
   const redirectToLogin = () => { /* ✨ implement */ }
   const redirectToArticles = () => { /* ✨ implement */ }
 
-  const logout = (props) => {
+  const logout  = (props) => {
     // ✨ implement
     // If a token is in local storage it should be removed,
     // and a message saying "Goodbye!" should be set in its proper state.
@@ -35,7 +35,7 @@ export default function App() {
     navigate('/')
   }
   
-  const login = ( username, password ) => {
+  const login = async ( username, password ) => {
     // ✨ implement
     // We should flush the message state, turn on the spinner
     // and launch a request to the proper endpoint.
@@ -44,7 +44,7 @@ export default function App() {
     // to the Articles screen. Don't forget to turn off the spinner!
     setMessage("");
     setSpinnerOn(true);
-    axios.post('http://localhost:9000/api/login', username, password)
+   await axios.post('http://localhost:9000/api/login', username, password)
     .then(res => {
       localStorage.setItem('token', res.data.token);
       setMessage(`Here are your articles, ${username.username}!`)
@@ -59,7 +59,7 @@ const getArticles = () =>{
   setMessage("");
   setSpinnerOn(true);
   axiosWithAuth().
-  post(`http://localhost:9000/api/articles`)
+  get(`http://localhost:9000/api/articles`)
   .then(res => {
 
     setArticles(res.data.articles)
@@ -69,6 +69,7 @@ console.log(res.token)
 
   }).catch(err => {
     if(err == 401){
+      localStorage.clear()
       navigate ('/')
       setSpinnerOn(false)
     }
@@ -91,6 +92,12 @@ console.log(res.token)
       setSpinnerOn(false);
   console.log(res.token)
      navigate ("/articles")
+    }).catch(err => {
+      if(err == 401){
+        localStorage.clear()
+        navigate ('/')
+        setSpinnerOn(false)
+      }
     })
     
   }
@@ -98,11 +105,30 @@ console.log(res.token)
   const updateArticle = ({ article_id, article }) => {
     // ✨ implement
     // You got this!
+    axiosWithAuth().
+    delete(`http://localhost:9000/api/articles/${article_id}`)
+    .then(res => {
+  setSpinnerOn(true)
+      setMessage(res.data.message)
+      setSpinnerOn(false);
+  console.log(res.token)
+     navigate ("/articles")
+  })
   }
 
-  const deleteArticle = article_id => {
+  const deleteArticle = (article_id) => {
+
     // ✨ implement
-  }
+    axiosWithAuth().
+    delete(`http://localhost:9000/api/articles/${article_id}`)
+    .then(res => {
+  setSpinnerOn(true)
+      setMessage(res.data.message)
+      setSpinnerOn(false);
+  console.log(res.token)
+     navigate ("/articles")
+  })
+}
 
   return (
     // ✨ fix the JSX: `Spinner`, `Message`, `LoginForm`, `ArticleForm` and `Articles` expect props ❗
@@ -124,7 +150,7 @@ console.log(res.token)
   setCurrentArticleId ={setCurrentArticleId} />
               
               <Articles articles={articles} getArticles= {getArticles} deleteArticle={deleteArticle}
-              setCurrentArticleId={setCurrentArticleId}/>
+              setCurrentArticleId={setCurrentArticleId} />
             </>
           } />
         </Routes>

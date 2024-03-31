@@ -59,16 +59,20 @@ const getArticles = () =>{
   setMessage("");
   setSpinnerOn(true);
   axiosWithAuth().
-  axios.post(`http://localhost:9000/api/articles`)
+  post(`http://localhost:9000/api/articles`)
   .then(res => {
 
     setArticles(res.data.articles)
     setMessage(res.data.message)
     setSpinnerOn(false);
 console.log(res.token)
-   navigate ("/articles")
-  })
 
+  }).catch(err => {
+    if(err == 401){
+      navigate ('/')
+      setSpinnerOn(false)
+    }
+  })
 }
 
   const postArticle = (article) => {
@@ -79,7 +83,7 @@ console.log(res.token)
     setMessage("");
     setSpinnerOn(true);
     axiosWithAuth().
-    axios.post(`http://localhost:9000/api/articles`, article)
+    post(`http://localhost:9000/api/articles`, article)
     .then(res => {
   
       getArticles()

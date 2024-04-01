@@ -15,8 +15,8 @@ export default function App() {
   // ✨ MVP can be achieved with these states
   const [message, setMessage] = useState('')
   const [articles, setArticles] = useState([])
-  const [currentArticleId, setCurrentArticleId] = useState()
-  const [currentArticle, setCurrentArticle] = useState()
+  const [currentArticleId, setCurrentArticleId] = useState([])
+  const [currentArticle, setCurrentArticle] = useState({})
   const [spinnerOn, setSpinnerOn] = useState(false)
 
   // ✨ Research `useNavigate` in React Router v.6
@@ -50,7 +50,6 @@ export default function App() {
       localStorage.setItem('token', res.data.token);
       setMessage(`Here are your articles, ${username.username}!`)
       setSpinnerOn(false);
-console.log(res.token)
      navigate ("/articles")
 
     })
@@ -103,11 +102,11 @@ console.log(res.token)
     
   }
 
-  const updateArticle = ({ article_id, article }) => {
+  const updateArticle = ( art_id, art) => {
     // ✨ implement
     // You got this!
     axiosWithAuth().
-    delete(`http://localhost:9000/api/articles`,  article_id, article)
+    delete(`http://localhost:9000/api/articles`,  art_id, art)
     .then(res => {
   setSpinnerOn(true)
       setMessage(res.data.message)

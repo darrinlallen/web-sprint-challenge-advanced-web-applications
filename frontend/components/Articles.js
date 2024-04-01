@@ -10,7 +10,7 @@ export default function Articles({articles2, getArticles, deleteArticle,
   // ✨ implement conditional logic: if no token exists
   // we should render a Navigate to login screen (React Router v.6)
     const [articles, setArticles] = useState([])
-  
+    
 
 
       const token = localStorage.getItem('token');
@@ -23,24 +23,27 @@ export default function Articles({articles2, getArticles, deleteArticle,
     const arts = async () =>{
       try{ 
     
-    const response = await axiosWithAuth().
+    const response1 = await axiosWithAuth().
     get(`http://localhost:9000/api/articles`)
     .then(response => {
       setArticles(response.data.articles)});
+    
       } 
       catch(err){
-       console.log("llllllllllllllllllllll")
+       console.log(response.data.articles)
       }
   }
   arts()    
   })
-    
+  
 const editMe = (ids, title , text, topic) =>{
 
-  setArticles([ids, title, text,topic])
-console.log({articles})
- 
+
+setCurrentArticleId = ([ids, title, text,topic])
+console.log("id :", setCurrentArticleId)
+
 }
+
 
   return (
     // ✨ fix the JSX: replace `Function.prototype` with actual functions

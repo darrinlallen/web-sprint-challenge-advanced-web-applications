@@ -3,23 +3,29 @@ import PT from 'prop-types'
 
 const initialFormValues = { title: '', text: '', topic: '' }
 
-export default function ArticleForm( {postArticle},
+export default function ArticleForm( {postArticle,
   updateArticle,
   setCurrentArticleId,
-  currentArtice){
+  currentArticle}){
   const [values, setValues] = useState(initialFormValues)
   // ✨ where are my props? Destructure them here
 
   useEffect(() => {
+        
+    if (currentArticle){
+      setValues(values.title, values.text, values.topic)
+    }
+    console.log('edit hhyhyhyyhyh')
     // ✨ implement
     // Every time the `currentArticle` prop changes, we should check it for truthiness:
     // if it's truthy, we should set its title, text and topic into the corresponding
     // values of the form. If it's not, we should reset the form back to initial values.
-  })
+  },[currentArticle])
 
   const onChange = evt => {
     const { id, value } = evt.target
     setValues({ ...values, [id]: value })
+ 
   }
 
   const onSubmit = evt => {

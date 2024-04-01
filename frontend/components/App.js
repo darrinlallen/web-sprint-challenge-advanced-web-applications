@@ -16,6 +16,7 @@ export default function App() {
   const [message, setMessage] = useState('')
   const [articles, setArticles] = useState([])
   const [currentArticleId, setCurrentArticleId] = useState()
+  const [currentArticle, setCurrentArticle] = useState()
   const [spinnerOn, setSpinnerOn] = useState(false)
 
   // ✨ Research `useNavigate` in React Router v.6
@@ -106,7 +107,7 @@ console.log(res.token)
     // ✨ implement
     // You got this!
     axiosWithAuth().
-    delete(`http://localhost:9000/api/articles/${article_id}`)
+    delete(`http://localhost:9000/api/articles`,  article_id, article)
     .then(res => {
   setSpinnerOn(true)
       setMessage(res.data.message)
@@ -119,6 +120,7 @@ console.log(res.token)
   const deleteArticle = (article_id) => {
 
     // ✨ implement
+    setSpinnerOn(true)
     axiosWithAuth().
     delete(`http://localhost:9000/api/articles/${article_id}`)
     .then(res => {
@@ -147,7 +149,7 @@ console.log(res.token)
           <Route path="articles" element={
             <>
               <ArticleForm  postArticle = {postArticle} updateArticle = {updateArticle}
-  setCurrentArticleId ={setCurrentArticleId} />
+  setCurrentArticleId ={setCurrentArticleId} currentArticle={currentArticle}/>
               
               <Articles articles={articles} getArticles= {getArticles} deleteArticle={deleteArticle}
               setCurrentArticleId={setCurrentArticleId} />

@@ -49,15 +49,14 @@ export default function Articles({articles2, getArticles, deleteArticle,
   function editMe(id1, title, text, topic){
     const arty  = {title: title, text: text, topic: topic}
     console.log({arty})
-    currentArticle =22222222222222222222
   
     axiosWithAuth().
     put(`http://localhost:9000/api/articles/${id1}`, arty)
     .then(res => {
   console.log(res.data.message)
       setMessage(res.data.message)
-      
-     getArticles()
+           getArticles()
+           navigate ("/articles")
   })
  }
 
@@ -68,6 +67,7 @@ export default function Articles({articles2, getArticles, deleteArticle,
     // and use the articles prop to generate articles
     <div className="articles">
       <h2>Articles</h2>
+      {message}
       {
          articles.map(art => {
             return (

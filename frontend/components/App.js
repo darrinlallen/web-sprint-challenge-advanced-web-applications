@@ -148,7 +148,7 @@ console.log(res.token)
   setCurrentArticleId ={setCurrentArticleId} currentArticle={currentArticle}/>
               
               <Articles articles={articles} getArticles= {getArticles} deleteArticle={deleteArticle}
-              setCurrentArticleId={setCurrentArticleId} />
+              setCurrentArticle={setCurrentArticle} setCurrentArticleId={setCurrentArticleId}/>
             </>
           } />
         </Routes>

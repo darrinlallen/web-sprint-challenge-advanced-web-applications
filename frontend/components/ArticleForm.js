@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import PT from 'prop-types'
 import { NavLink, Routes, Route, useNavigate } from 'react-router-dom'
 import Spinner from './Spinner'
+
+
+
 const initialFormValues = { title: '', text: '', topic: '' }
 
 export default function ArticleForm( {postArticle,
@@ -11,18 +14,21 @@ export default function ArticleForm( {postArticle,
   const [values, setValues] = useState(initialFormValues)
   // ✨ where are my props? Destructure them here
   const navigate = useNavigate();
-  
+  var title = " Enter title"
+
+
     // ✨ implement
     // Every time the `currentArticle` prop changes, we should check it for truthiness:
     // if it's truthy, we should set its title, text and topic into the corresponding
     // values of the form. If it's not, we should reset the form back to initial values.
-    
-  const onChange = evt => {
-    const { id, value } = evt.target
-    setValues({ ...values, [id]: value })
- 
-  }
 
+
+
+const onChange = evt => {
+  const { id, value } = evt.target
+  setValues({ ...values, [id]: value })
+
+}
   const onSubmit = evt => {
     evt.preventDefault()
     // ✨ implement
@@ -48,6 +54,7 @@ export default function ArticleForm( {postArticle,
       return false;
     }
     else {return true}
+
   }
 
   return (
@@ -95,4 +102,5 @@ ArticleForm.propTypes = {
     text: PT.string.isRequired,
     topic: PT.string.isRequired,
   })
+  
 }

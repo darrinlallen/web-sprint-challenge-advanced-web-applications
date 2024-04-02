@@ -2,9 +2,16 @@ import React, { useEffect , useState} from 'react'
 import axiosWithAuth from '../axios/index'
 import { Navigate, useNavigate } from 'react-router-dom'
 import PT from 'prop-types'
+import Message from './Message'
+
+
+
+
+
+
 
 export default function Articles({articles2, getArticles, deleteArticle, 
-  setCurrentArticleId, currentArticleId} ) {
+  setCurrentArticle, currentArticle} ) {
   // ✨ where are my props? Destructure them here
 
   // ✨ implement conditional logic: if no token exists
@@ -13,6 +20,8 @@ export default function Articles({articles2, getArticles, deleteArticle,
     const [spinnerOn, setSpinnerOn] = useState(false)
     const navigate = useNavigate();
     const [message, setMessage] = useState('')
+    var setArt_id  = null;
+     var setArt = {}
       const token = localStorage.getItem('token');
 
       if (!token){
@@ -36,26 +45,21 @@ export default function Articles({articles2, getArticles, deleteArticle,
   arts()    
   })
   
-const editMe = (ids, title , text, topic) =>{
 
-
-setCurrentArticleId = ([ids, title, text,topic]);
-console.log(setCurrentArticleId);
-const art_id = ids
-const art = ({title: title, text: text, topic: topic})
-  // ✨ implement
-  // You got this!
-  axiosWithAuth().
-  put(`http://localhost:9000/api/articles/${art_id}`, art)
-  .then(res => {
-setSpinnerOn(true)
-    setMessage(res.data.message)
-    setSpinnerOn(false);
-console.log(res.data.token)
-   navigate ("/articles")
-})
-}
+  function editMe(id1, title, text, topic){
+    const arty  = {title: title, text: text, topic: topic}
+    console.log({arty})
+    currentArticle =22222222222222222222
   
+    axiosWithAuth().
+    put(`http://localhost:9000/api/articles/${id1}`, arty)
+    .then(res => {
+  console.log(res.data.message)
+      setMessage(res.data.message)
+      
+     getArticles()
+  })
+ }
 
 
 
@@ -74,8 +78,8 @@ console.log(res.data.token)
                   <p>Topic: {art.topic}</p>
                 </div>
                 <div>
-                  <button disabled={false} onClick={() => editMe(art.article_id, 
-                  art.title, art.text, art.topic)}>Edit</button>
+                  <button disabled={false} onClick={() => editMe(art.article_id, art.title, art.text, art.topic) 
+}>Edit</button>
                   <button disabled={false} onClick={() => deleteArticle(art.article_id)}>Delete</button>
                 </div>
               </div>

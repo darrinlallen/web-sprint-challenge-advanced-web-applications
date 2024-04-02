@@ -11,13 +11,7 @@ export default function ArticleForm( {postArticle,
   const [values, setValues] = useState(initialFormValues)
   // ✨ where are my props? Destructure them here
   const navigate = useNavigate();
-  console.log()
-  useEffect(() => {
-
   
-
-  },[setCurrentArticleId])
-
     // ✨ implement
     // Every time the `currentArticle` prop changes, we should check it for truthiness:
     // if it's truthy, we should set its title, text and topic into the corresponding
@@ -83,7 +77,7 @@ export default function ArticleForm( {postArticle,
       </select>
       <div className="button-group">
         <button disabled={isDisabled()} id="submitArticle">Submit</button>
-        <button onClick={cancel}>Cancel edit</button>
+        <button onClick={() => {cancel}}>Cancel edit</button>
       </div>
     </form>
   )

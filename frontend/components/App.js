@@ -80,17 +80,14 @@ console.log(res.token)
     // The flow is very similar to the `getArticles` function.
     // You'll know what to do! Use log statements or breakpoints
     // to inspect the response from the server.
-    setMessage("");
     setSpinnerOn(true);
     axiosWithAuth().
     post(`http://localhost:9000/api/articles`, article)
     .then(res => {
   
-      getArticles()
       setMessage(res.data.message)
       setSpinnerOn(false);
   console.log(res.token)
-     navigate ("/articles")
     }).catch(err => {
       if(err == 401){
         localStorage.clear()

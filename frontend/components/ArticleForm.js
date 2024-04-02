@@ -32,7 +32,7 @@ export default function ArticleForm( {postArticle,
       
     postArticle(values)
     setValues(initialFormValues)
-
+    isDisabled()
   }
  
   const cancel = evt =>{
@@ -86,7 +86,8 @@ export default function ArticleForm( {postArticle,
 // 🔥 No touchy: ArticleForm expects the following props exactly:
 ArticleForm.propTypes = {
   postArticle: PT.func.isRequired,
-  updateArticle: PT.func.isRequired,
+  updateArticle:
+   PT.func.isRequired,
   setCurrentArticleId: PT.func.isRequired,
   currentArticle: PT.shape({ // can be null or undefined, meaning "create" mode (as opposed to "update")
     article_id: PT.number.isRequired,

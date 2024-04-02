@@ -37,12 +37,14 @@ export default function ArticleForm( {postArticle,
   
       
     postArticle(values)
+    setValues(initialFormValues)
+
   }
  
   const cancel = evt =>{
     
-    console.log("cancel")
-  values.title ="canceled";
+    evt.preventDefault()
+    setValues(initialFormValues)
 
  }
   const isDisabled = () => {

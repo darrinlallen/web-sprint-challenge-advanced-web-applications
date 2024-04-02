@@ -1,6 +1,6 @@
 import React, { useEffect , useState} from 'react'
 import axiosWithAuth from '../axios/index'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import PT from 'prop-types'
 
 export default function Articles({articles2, getArticles, deleteArticle, 
@@ -10,9 +10,9 @@ export default function Articles({articles2, getArticles, deleteArticle,
   // ✨ implement conditional logic: if no token exists
   // we should render a Navigate to login screen (React Router v.6)
     const [articles, setArticles] = useState([])
-    
-
-
+    const [spinnerOn, setSpinnerOn] = useState(false)
+    const navigate = useNavigate();
+    const [message, setMessage] = useState('')
       const token = localStorage.getItem('token');
 
       if (!token){
@@ -39,10 +39,24 @@ export default function Articles({articles2, getArticles, deleteArticle,
 const editMe = (ids, title , text, topic) =>{
 
 
-setCurrentArticleId = ([ids, title, text,topic])
-console.log("id :", setCurrentArticleId)
-
+setCurrentArticleId = ([ids, title, text,topic]);
+console.log(setCurrentArticleId);
+const art_id = ids
+const art = ({title: title, text: text, topic: topic})
+  // ✨ implement
+  // You got this!
+  axiosWithAuth().
+  put(`http://localhost:9000/api/articles/${art_id}`, art)
+  .then(res => {
+setSpinnerOn(true)
+    setMessage(res.data.message)
+    setSpinnerOn(false);
+console.log(res.data.token)
+   navigate ("/articles")
+})
 }
+  
+
 
 
   return (

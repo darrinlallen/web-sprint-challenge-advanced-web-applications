@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PT from 'prop-types'
-
+import { NavLink, Routes, Route, useNavigate } from 'react-router-dom'
+import Spinner from './Spinner'
 const initialFormValues = { title: '', text: '', topic: '' }
 
 export default function ArticleForm( {postArticle,
@@ -9,8 +10,13 @@ export default function ArticleForm( {postArticle,
   currentArticle}){
   const [values, setValues] = useState(initialFormValues)
   // ✨ where are my props? Destructure them here
+  const navigate = useNavigate();
+  console.log()
+  useEffect(() => {
 
+  
 
+  },[setCurrentArticleId])
 
     // ✨ implement
     // Every time the `currentArticle` prop changes, we should check it for truthiness:
@@ -33,9 +39,11 @@ export default function ArticleForm( {postArticle,
     postArticle(values)
   }
  
-  const cancel = () =>{
-  setValues(initialFormValues);
-navigate ("/articles")  
+  const cancel = evt =>{
+    
+    console.log("cancel")
+  values.title ="canceled";
+
  }
   const isDisabled = () => {
     // ✨ implement

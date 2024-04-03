@@ -15,7 +15,7 @@ export default function App() {
   // ✨ MVP can be achieved with these states
   const [message, setMessage] = useState('')
   const [articles, setArticles] = useState([])
-  const [currentArticleId, setCurrentArticleId] = useState()
+  const [currentArticleId, setCurrentArticleId] = useState(0)
   const [currentArticle, setCurrentArticle] = useState()
   const [spinnerOn, setSpinnerOn] = useState(false)
 
@@ -55,7 +55,7 @@ export default function App() {
   }
 const getArticles = () =>{
 
-  setMessage("");
+  
   setSpinnerOn(true);
   axiosWithAuth().
   get(`http://localhost:9000/api/articles`)
@@ -64,7 +64,6 @@ const getArticles = () =>{
     setArticles(res.data.articles)
     setMessage(res.data.message)
     setSpinnerOn(false);
-console.log(res.token)
 
   }).catch(err => {
     if(err == 401){
@@ -144,8 +143,10 @@ console.log(res.token)
           <Route path="/" element={<LoginForm login={login}/>} />
           <Route path="articles" element={
             <>
-              <ArticleForm  postArticle = {postArticle} updateArticle = {updateArticle}
-  setCurrentArticleId ={setCurrentArticleId} currentArticle={currentArticle}/>
+              <ArticleForm currentArticle={articles.find(art => art.article_id == currentArticleId)}
+                setCurrentArticleId={setCurrentArticleId}
+                postArticle={postArticle}
+                updateArticle={updateArticle}/>
               
               <Articles articles={articles} getArticles= {getArticles} deleteArticle={deleteArticle}
               setCurrentArticle={setCurrentArticle} setCurrentArticleId={setCurrentArticleId}/>

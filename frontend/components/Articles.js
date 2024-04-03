@@ -10,16 +10,17 @@ import Message from './Message'
 
 
 
-export default function Articles({articles2, getArticles, deleteArticle, 
-  setCurrentArticle, currentArticle} ) {
+export default function Articles (props) {
   // ✨ where are my props? Destructure them here
-
+    const {articles, getArticles, deleteArticle, 
+      setCurrentArticleId, currentArticleId} = props
   // ✨ implement conditional logic: if no token exists
   // we should render a Navigate to login screen (React Router v.6)
-    const [articles, setArticles] = useState([])
+ //   const [articles, setArticles] = useState([])
     const [spinnerOn, setSpinnerOn] = useState(false)
     const navigate = useNavigate();
     const [message, setMessage] = useState('')
+    const [articles2, setArticles2] = useState([])
     var setArt_id  = null;
      var setArt = {}
       const token = localStorage.getItem('token');
@@ -27,38 +28,33 @@ export default function Articles({articles2, getArticles, deleteArticle,
       if (!token){
    return <Navigate to="/" />
     }
-    
-      useEffect(() => {
-    const arts = async () =>{
-      try{ 
-    
-    const response1 = await axiosWithAuth().
-    get(`http://localhost:9000/api/articles`)
-    .then(response => {
-      setArticles(response.data.articles)});
-    
-      } 
-      catch(err){
-       console.log(response.data.articles)
-      }
-  }
-  arts()    
-  })
+  
+  
+    useEffect(() => {
+      const arts = async () =>{
+        try{ 
+      
+      const response1 = await axiosWithAuth().
+      get(`http://localhost:9000/api/articles`)
+      .then(response => {
+        setArticles2(response.data.articles)});
+      
+        } 
+        catch(err){
+         console.log(response.data.articles)
+        }
+    }
+    arts()    
+    })
   
 
-  function editMe(id1, title, text, topic){
-    const arty  = {title: title, text: text, topic: topic}
-    console.log({arty})
-  
-    axiosWithAuth().
-    put(`http://localhost:9000/api/articles/${id1}`, arty)
-    .then(res => {
-  console.log(res.data.message)
-      setMessage(res.data.message)
-           getArticles()
-           navigate ("/articles")
-  })
- }
+
+
+  function editMe(id1){
+    setCurrentArticleId(id1)
+console.log(currentArticleId)
+console.log(id1) 
+}
 
 
 
@@ -67,9 +63,9 @@ export default function Articles({articles2, getArticles, deleteArticle,
     // and use the articles prop to generate articles
     <div className="articles">
       <h2>Articles</h2>
-      {message}
+      
       {
-         articles.map(art => {
+         articles2.map(art => {
             return (
               <div className="article" key={art.article_id}>
                 <div>
@@ -78,7 +74,7 @@ export default function Articles({articles2, getArticles, deleteArticle,
                   <p>Topic: {art.topic}</p>
                 </div>
                 <div>
-                  <button disabled={false} onClick={() => editMe(art.article_id, art.title, art.text, art.topic) 
+                  <button disabled={false} onClick={() => editMe(art.article_id) 
 }>Edit</button>
                   <button disabled={false} onClick={() => deleteArticle(art.article_id)}>Delete</button>
                 </div>

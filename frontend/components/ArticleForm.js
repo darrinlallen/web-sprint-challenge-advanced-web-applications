@@ -5,17 +5,32 @@ import Spinner from './Spinner'
 
 
 
-const initialFormValues = { title: '', text: '', topic: '' }
+const initialFormValues = { title: 'sddsdsd', text: 'sdsssss', topic: 'ssdss' }
 
-export default function ArticleForm( {postArticle,
-  updateArticle,
-  setCurrentArticleId,
-  currentArticle}){
+export default function ArticleForm(props){
   const [values, setValues] = useState(initialFormValues)
   // ✨ where are my props? Destructure them here
   const navigate = useNavigate();
-  var title = " Enter title"
+  var title = " Enter tdsfdfsfssdtle"
+const {postArticle,
+  updateArticle,
+  setCurrentArticleId,
+  currentArticle} = props
 
+useEffect(() => {
+if (currentArticle){
+  setValues({  
+  title : currentArticle.title,
+  text :  currentArticle.text,
+  topic : currentArticle.topic
+})
+}
+
+else {
+
+  setValues(initialFormValues)
+}
+},[currentArticle])
 
     // ✨ implement
     // Every time the `currentArticle` prop changes, we should check it for truthiness:

@@ -16,8 +16,8 @@ export default function App() {
   const initialFormValues = { title: '', text: '', topic: '' }
   const [message, setMessage] = useState('')
   const [articles, setArticles] = useState([])
-  const [currentArticleId, setCurrentArticleId] = useState(0)
-  const [currentArticle, setCurrentArticle] = useState(initialFormValues)
+  const [currentArticleId, setCurrentArticleId] = useState()
+  const [currentArticle, setCurrentArticle] = useState()
   const [spinnerOn, setSpinnerOn] = useState(false)
 
   // ✨ Research `useNavigate` in React Router v.6
@@ -63,9 +63,8 @@ const getArticles = () =>{
   .then(res => {
 
     setArticles(res.data.articles)
-    setMessage(res.data.message)
     setSpinnerOn(false);
-
+    console.log(message)
   }).catch(err => {
     if(err == 401){
       localStorage.clear()
@@ -110,6 +109,7 @@ const getArticles = () =>{
       setMessage(res.data.message)
   })
   setCurrentArticle(initialFormValues)
+  setCurrentArticleId(0)
   getArticles()
   }
 
@@ -124,7 +124,8 @@ const getArticles = () =>{
       setMessage(res.data.message)
       setSpinnerOn(false);
   console.log(res.token)
-     getArticles()
+    getArticles()
+    setMessage("we here")
   })
 }
 

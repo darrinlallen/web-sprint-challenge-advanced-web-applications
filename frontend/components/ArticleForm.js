@@ -54,21 +54,21 @@ const onChange = evt => {
     isDisabled(true)
   
   }   
-if (!currentArticle){
+if (! currentArticle){
   isDisabled(true)
     postArticle(values)
     setValues(initialFormValues)
     isDisabled(true)
-}
+}else {
 setValues(initialFormValues)
 isDisabled(true)
+}
  }
   const cancel = evt =>{
     
     evt.preventDefault()
     setValues(initialFormValues)
-    navigate ('/articles')
-  
+    
   }
   const isDisabled = () => {
     // ✨ implement

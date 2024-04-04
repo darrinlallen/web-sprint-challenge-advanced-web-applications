@@ -125,7 +125,6 @@ const getArticles = () =>{
       setSpinnerOn(false);
   console.log(res.token)
     getArticles()
-    setMessage("we here")
   })
 }
 

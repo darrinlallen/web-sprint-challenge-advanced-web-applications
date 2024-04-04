@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PT from 'prop-types'
-import { NavLink, Routes, Route, useNavigate } from 'react-router-dom'
+import { NavLink, Routes, Route, useNavigate, useSearchParams } from 'react-router-dom'
 import Spinner from './Spinner'
 
 
@@ -11,7 +11,8 @@ export default function ArticleForm(props){
   const [values, setValues] = useState(initialFormValues)
   // ✨ where are my props? Destructure them here
   const navigate = useNavigate();
-  var title = " Enter tdsfdfsfssdtle"
+  const [TextMe, setTextMe] = useState("Create Article")
+    var title = " Enter tdsfdfsfssdtle"
 const {postArticle,
   updateArticle,
   setCurrentArticleId,
@@ -20,10 +21,12 @@ const {postArticle,
 useEffect(() => {
 if (currentArticle){
   setValues(currentArticle)       
+  setTextMe("Edit Article")
 console.log("articleform")
 }
 else {
 console.log("here")
+setTextMe("Create Article")
   setValues(initialFormValues)
 }
 },[currentArticle])
@@ -58,9 +61,11 @@ if (! currentArticle){
   isDisabled(true)
     postArticle(values)
     setValues(initialFormValues)
+    setTextMe("Create Article")
     isDisabled(true)
 }else {
 setValues(initialFormValues)
+setTextMe("Create Article")
 isDisabled(true)
 }
  }
@@ -68,7 +73,7 @@ isDisabled(true)
     
     evt.preventDefault()
     setValues(initialFormValues)
-    
+    setTextMe("Create Article")
   }
   const isDisabled = () => {
     // ✨ implement
@@ -84,7 +89,7 @@ isDisabled(true)
     // ✨ fix the JSX: make the heading display either "Edit" or "Create"
     // and replace Function.prototype with the correct function
     <form id="form" onSubmit={onSubmit}>
-      <h2>Create Article</h2>
+      <h2>{TextMe}</h2>
       <input
         maxLength={50}
         onChange={onChange}
@@ -107,7 +112,7 @@ isDisabled(true)
       </select>
       <div className="button-group">
         <button disabled={isDisabled()} id="submitArticle">Submit</button>
-        <button onClick={() => {cancel}}>Cancel edit</button>
+        <button disabled={isDisabled()} onClick={() => {cancel}}>Cancel edit</button>
       </div>
     </form>
   )

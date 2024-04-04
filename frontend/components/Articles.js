@@ -20,7 +20,6 @@ export default function Articles (props) {
     const [spinnerOn, setSpinnerOn] = useState(false)
     const navigate = useNavigate();
     const [message, setMessage] = useState('')
-    const [articles2, setArticles2] = useState([])
     var setArt_id  = null;
      var setArt = {}
       const token = localStorage.getItem('token');
@@ -28,14 +27,10 @@ export default function Articles (props) {
       if (!token){
    return <Navigate to="/" />
     }
-  else {
-    getArticles()
-  }
-  
 
-  
-
-
+  useEffect(() => {
+getArticles()
+  },[])
 
   function editMe(id1){
     setCurrentArticleId(id1)

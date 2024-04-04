@@ -86,7 +86,7 @@ const getArticles = () =>{
   
       setMessage(res.data.message)
       setSpinnerOn(false);
-  console.log(res.token)
+  
     }).catch(err => {
       if(err == 401){
         localStorage.clear()
@@ -104,10 +104,7 @@ const getArticles = () =>{
     axiosWithAuth().
     put(`http://localhost:9000/api/articles/${art_id}`, art)
     .then(res => {
-  setSpinnerOn(true)
       setMessage(res.data.message)
-      setSpinnerOn(false);
-     navigate ("/articles")
   })
   }
 

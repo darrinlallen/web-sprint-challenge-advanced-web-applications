@@ -19,12 +19,9 @@ const {postArticle,
 
 useEffect(() => {
 if (currentArticle){
-  setValues(currentArticle
-)       
+  setValues(currentArticle)       
 console.log("here")
-updateArticle(currentArticle.article_id, currentArticle)
 }
-
 else {
 console.log("here")
   setValues(initialFormValues)
@@ -49,12 +46,16 @@ const onChange = evt => {
     // We must submit a new post or update an existing one,
     // depending on the truthyness of the `currentArticle` prop.
   
-      
+  if (currentArticle){
+    updateArticle(currentArticle.article_id, currentArticle)
+
+  }   
+  else{ 
     postArticle(values)
     setValues(initialFormValues)
     isDisabled()
   }
- 
+ }
   const cancel = evt =>{
     
     evt.preventDefault()

@@ -20,7 +20,7 @@ const {postArticle,
 useEffect(() => {
 if (currentArticle){
   setValues(currentArticle)       
-console.log("here")
+console.log("")
 }
 else {
 console.log("here")
@@ -47,14 +47,15 @@ const onChange = evt => {
     // depending on the truthyness of the `currentArticle` prop.
   
   if (currentArticle){
+    if (values.title.trim().length >=1 && values.text.trim().length>=1 && values.topic.length >=1){
     updateArticle(currentArticle.article_id, currentArticle)
-
+    setValues(initialFormValues)}
   }   
-  else{ 
+
     postArticle(values)
     setValues(initialFormValues)
     isDisabled()
-  }
+  
  }
   const cancel = evt =>{
     

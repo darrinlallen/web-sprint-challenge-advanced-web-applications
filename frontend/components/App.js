@@ -86,6 +86,7 @@ const getArticles = () =>{
   
       setMessage(res.data.message)
       setSpinnerOn(false);
+    
   
     }).catch(err => {
       if(err == 401){
@@ -119,7 +120,7 @@ const getArticles = () =>{
       setMessage(res.data.message)
       setSpinnerOn(false);
   console.log(res.token)
-     navigate ("/articles")
+     getArticles()
   })
 }
 

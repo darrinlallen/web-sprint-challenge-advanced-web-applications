@@ -20,7 +20,7 @@ const {postArticle,
 useEffect(() => {
 if (currentArticle){
   setValues(currentArticle)       
-console.log("")
+console.log("articleform")
 }
 else {
 console.log("here")
@@ -45,24 +45,31 @@ const onChange = evt => {
     // ✨ implement
     // We must submit a new post or update an existing one,
     // depending on the truthyness of the `currentArticle` prop.
-  
-  if (currentArticle){
-    if (values.title.trim().length >=1 && values.text.trim().length>=1 && values.topic.length >=1){
-    updateArticle(currentArticle.article_id, currentArticle)
-    setValues(initialFormValues)}
-  }   
 
+  if (currentArticle){
+    isDisabled(true)
+    if (values.title.trim().length >=1 && values.text.trim().length>=1 && values.topic.length >=1){
+    updateArticle(currentArticle.article_id, values)
+    setValues(initialFormValues)}
+    isDisabled(true)
+  
+  }   
+if (!currentArticle){
+  isDisabled(true)
     postArticle(values)
     setValues(initialFormValues)
-    isDisabled()
-  
+    isDisabled(true)
+}
+setValues(initialFormValues)
+isDisabled(true)
  }
   const cancel = evt =>{
     
     evt.preventDefault()
     setValues(initialFormValues)
-
- }
+    navigate ('/articles')
+  
+  }
   const isDisabled = () => {
     // ✨ implement
     // Make sure the inputs have some values

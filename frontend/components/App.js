@@ -35,6 +35,7 @@ export default function App() {
     setMessage(`Goodbye!`)
     console.log("goodbye")
     navigate('/')
+    setCurrentArticle(initialFormValues)
   }
   
   const login = async ( username, password ) => {
@@ -86,7 +87,8 @@ const getArticles = () =>{
   
       setMessage(res.data.message)
       setSpinnerOn(false);
-    
+    getArticles()
+    setCurrentArticle(initialFormValues)
   
     }).catch(err => {
       if(err == 401){
@@ -107,6 +109,8 @@ const getArticles = () =>{
     .then(res => {
       setMessage(res.data.message)
   })
+  setCurrentArticle(initialFormValues)
+  getArticles()
   }
 
   const deleteArticle = (article_id) => {

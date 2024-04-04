@@ -5,7 +5,7 @@ import Spinner from './Spinner'
 
 
 
-const initialFormValues = { title: 'sddsdsd', text: 'sdsssss', topic: 'ssdss' }
+const initialFormValues = { title: '', text: '', topic: '' }
 
 export default function ArticleForm(props){
   const [values, setValues] = useState(initialFormValues)
@@ -19,15 +19,14 @@ const {postArticle,
 
 useEffect(() => {
 if (currentArticle){
-  setValues({  
-  title : currentArticle.title,
-  text :  currentArticle.text,
-  topic : currentArticle.topic
-})
+  setValues(currentArticle
+)       
+console.log("here")
+updateArticle(currentArticle.article_id, currentArticle)
 }
 
 else {
-
+console.log("here")
   setValues(initialFormValues)
 }
 },[currentArticle])

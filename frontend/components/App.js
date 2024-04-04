@@ -13,10 +13,11 @@ const loginUrl = 'http://localhost:9000/api/login'
 
 export default function App() {
   // ✨ MVP can be achieved with these states
+  const initialFormValues = { title: '', text: '', topic: '' }
   const [message, setMessage] = useState('')
   const [articles, setArticles] = useState([])
   const [currentArticleId, setCurrentArticleId] = useState(0)
-  const [currentArticle, setCurrentArticle] = useState()
+  const [currentArticle, setCurrentArticle] = useState(initialFormValues)
   const [spinnerOn, setSpinnerOn] = useState(false)
 
   // ✨ Research `useNavigate` in React Router v.6
@@ -56,7 +57,6 @@ export default function App() {
 const getArticles = () =>{
 
   
-  setSpinnerOn(true);
   axiosWithAuth().
   get(`http://localhost:9000/api/articles`)
   .then(res => {
@@ -102,12 +102,11 @@ const getArticles = () =>{
     // ✨ implement
     // You got this!
     axiosWithAuth().
-    put(`http://localhost:9000/api/articles`,  art_id, art)
+    put(`http://localhost:9000/api/articles/${art_id}`, art)
     .then(res => {
   setSpinnerOn(true)
       setMessage(res.data.message)
       setSpinnerOn(false);
-  console.log(res.token)
      navigate ("/articles")
   })
   }
@@ -149,7 +148,7 @@ const getArticles = () =>{
                 updateArticle={updateArticle}/>
               
               <Articles articles={articles} getArticles= {getArticles} deleteArticle={deleteArticle}
-              setCurrentArticle={setCurrentArticle} setCurrentArticleId={setCurrentArticleId}/>
+              setCurrentArticleId={setCurrentArticleId} CurrentArticleId={currentArticle}/>
             </>
           } />
         </Routes>

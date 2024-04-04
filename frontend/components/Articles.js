@@ -28,32 +28,18 @@ export default function Articles (props) {
       if (!token){
    return <Navigate to="/" />
     }
+  else {
+    getArticles()
+  }
   
-  
-    useEffect(() => {
-      const arts = async () =>{
-        try{ 
-      
-      const response1 = await axiosWithAuth().
-      get(`http://localhost:9000/api/articles`)
-      .then(response => {
-        setArticles2(response.data.articles)});
-      
-        } 
-        catch(err){
-         console.log(response.data.articles)
-        }
-    }
-    arts()    
-    })
+
   
 
 
 
   function editMe(id1){
     setCurrentArticleId(id1)
-console.log(currentArticleId)
-console.log(id1) 
+
 }
 
 
@@ -65,7 +51,7 @@ console.log(id1)
       <h2>Articles</h2>
       
       {
-         articles2.map(art => {
+         articles.map(art => {
             return (
               <div className="article" key={art.article_id}>
                 <div>
@@ -74,8 +60,7 @@ console.log(id1)
                   <p>Topic: {art.topic}</p>
                 </div>
                 <div>
-                  <button disabled={false} onClick={() => editMe(art.article_id) 
-}>Edit</button>
+                  <button disabled={false} onClick={() => editMe(art.article_id)}>Edit</button>
                   <button disabled={false} onClick={() => deleteArticle(art.article_id)}>Delete</button>
                 </div>
               </div>
